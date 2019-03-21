@@ -3,11 +3,17 @@ import numpy as np
 
 
 model = Model()
-model.fit(np.eye(3), 2, 2, 1)
+Z = np.array([
+	[1, 2],
+	[2, 1],
+	[2, 3],
+	[3, 2],
+	[5, 2],
+	[5, 5],
+	[7, 2],
+	[8, 1],
+	[8, 3],
+	[9, 2]
+]).transpose()
 
-print(model.A)
-print(model.V)
-print(model.U)
-
-# arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-# print(np.min(arr[0]))
+model.fit(Z, 2, 2, 1)
