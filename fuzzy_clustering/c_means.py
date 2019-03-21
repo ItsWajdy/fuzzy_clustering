@@ -45,7 +45,8 @@ class Model:
 					prev_U[i][k] = self.U[i][k]
 
 			self.__update_partition_matrix(D, Z)
-		return
+		# TODO: remove asserts in final version
+		assert abs(np.sum(self.U) - self.N) < self.epsilon, 'Model Didn\'t Fit Correctly'
 
 	def __init_vars(self, Z, c, fuzziness_parameter, termination_criterion, norm_inducing_matrix):
 		self.c = c
@@ -53,6 +54,7 @@ class Model:
 		self.n = Z.shape[0]
 		self.m = fuzziness_parameter
 		self.epsilon = termination_criterion
+		# TODO: remove asserts in final version
 		assert 1 < c < self.N, 'c must satisfy 1 < c < Number of samples'
 		assert self.m > 1, 'fuzziness_parameter must be > 1'
 		assert self.epsilon > 0, 'termination_criterion must be > 0'
