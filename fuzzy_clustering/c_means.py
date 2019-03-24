@@ -104,11 +104,11 @@ class Model:
 		return False
 
 	def __compute_cluster_means(self, Z):
-		nom = np.zeros([self.n, 1])
-		denom = 0
-
 		# DEBUG here
 		for i in range(self.c):
+			nom = np.zeros([self.n, 1])
+			denom = 0
+
 			for k in range(self.N):
 				mu_power = pow(self.U[i][k], self.m)
 				denom += mu_power
