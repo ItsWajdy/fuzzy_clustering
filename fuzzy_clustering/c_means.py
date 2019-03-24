@@ -68,8 +68,14 @@ class Model:
 		if norm_inducing_matrix == 'identity':
 			self.A = np.eye(self.n)
 		elif norm_inducing_matrix == 'diagonal':
-			# TODO: implement different types of A
-			pass
+			z_var = np.zeros([self.n, 1])
+
+			for i in range(self.n):
+				tmp = Z[i, :]
+				z_var[i] = 1/np.var(tmp)
+
+			self.A = np.diagflat(np.reshape(z_var, [self.n, 1]))
+			return
 		elif norm_inducing_matrix == 'mahalonobis':
 			z_mean = np.zeros([self.n, 1])
 
