@@ -18,7 +18,7 @@ Z = np.array([
 	[9, 2]
 ]).transpose()
 
-model.fit(Z, 2, 2, 0.01)
+model.fit(Z, 2, 2, 0.01, 'diagonal')
 
 plt.scatter(Z[0, :], Z[1, :])
 plt.scatter(model.V[0, :], model.V[1, :], marker='x', c='r')

@@ -14,7 +14,7 @@ class Model:
 		self.U = None
 
 	def fit(self,
-			Z: np.ndarray,
+			Z,
 			c,
 			fuzziness_parameter=2,
 			termination_criterion=0.01,
@@ -60,18 +60,37 @@ class Model:
 		assert self.epsilon > 0, 'termination_criterion must be > 0'
 		assert norm_inducing_matrix == 'identity' or 'diagonal' or 'mahalonobis', 'norm_inducing_matrix not valid'
 
-		self.__init_A(norm_inducing_matrix)
+		self.__init_A(norm_inducing_matrix, Z)
 		self.__init_V(Z)
 		self.__init_U(Z)
 
-	def __init_A(self, norm_inducing_matrix):
+	def __init_A(self, norm_inducing_matrix, Z):
 		if norm_inducing_matrix == 'identity':
 			self.A = np.eye(self.n)
 		elif norm_inducing_matrix == 'diagonal':
-			# TODO: implement different types of A
-			pass
+			z_var = np.zeros([self.n, 1])
+
+			for i in range(self.n):
+				tmp = Z[i, :]
+				z_var[i] = 1/np.var(tmp)
+
+			self.A = np.diagflat(np.reshape(z_var, [self.n, 1]))
+			return
 		elif norm_inducing_matrix == 'mahalonobis':
-			pass
+			z_mean = np.zeros([self.n, 1])
+
+			for i in range(self.n):
+				tmp = Z[i, :]
+				z_mean[i] = np.mean(tmp)
+
+			R = np.zeros([self.n, self.n])
+			for i in range(self.N):
+				zk = np.reshape(Z[:, i], [self.n, 1])
+				diff = np.subtract(zk, z_mean)
+				R = np.add(R, np.matmul(diff, diff.transpose()))
+
+			R = 1/self.N * R
+			self.A = np.linalg.inv(R)
 
 	def __init_V(self, Z):
 		self.V = np.zeros([self.n, self.c])
