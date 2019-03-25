@@ -1,4 +1,4 @@
-from fuzzy_clustering.c_means import Model
+from fuzzy_clustering.gustafson_kessel import Model
 import numpy as np
 import matplotlib.pyplot as plt
 import random
