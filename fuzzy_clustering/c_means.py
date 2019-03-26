@@ -48,6 +48,9 @@ class Model:
 		# TODO: remove asserts in final version
 		assert abs(np.sum(self.U) - self.N) < self.epsilon, 'Model Didn\'t Fit Correctly'
 
+	def predict(self, Z):
+		return self.__compute_partition_matrix(Z)
+
 	def __init_vars(self, Z, c, fuzziness_parameter, termination_criterion, norm_inducing_matrix):
 		self.c = c
 		self.N = Z.shape[1]
@@ -179,3 +182,19 @@ class Model:
 					remaining -= sum_added
 
 				self.U[edit[len(edit) - 1]][k] = remaining
+
+	def __compute_partition_matrix(self, Z):
+		U = np.zeros([self.c, Z.shape[1]])
+
+		for k in range(Z.shape[1]):
+			for i in range(self.c):
+				d_ik = np.sqrt(self.__D_squared(i, k, Z, self.V))
+				sum_distance = 0
+
+				for j in range(self.c):
+					d_jk = np.sqrt(self.__D_squared(j, k, Z, self.V))
+					add = pow(d_ik / d_jk, 2 / (self.m - 1))
+					sum_distance += add[0]
+
+				U[i][k] = 1 / sum_distance
+		return U
