@@ -1,5 +1,6 @@
 from fuzzy_clustering import c_means
 import numpy as np
+import random
 
 
 class Model(c_means.Model):
@@ -16,8 +17,16 @@ class Model(c_means.Model):
 	def __init_U(self, Z):
 		self.U = np.zeros([self.c, self.N])
 
-		D = super(Model, self).__compute_distances(Z)
-		self.__update_partition_matrix(D, Z)
+		for k in range(self.N):
+			remaining = 1
+			sum_added = 0
+			for i in range(self.c - 1):
+				self.U[i][k] = random.uniform(0, remaining)
+				sum_added += self.U[i][k]
+				remaining -= sum_added
+
+			self.U[self.c - 1][k] = remaining
+		assert abs(np.sum(self.U) - self.N) < self.epsilon, 'U initialized incorrectly'
 
 	def __compute_distances(self, Z):
 		self.__compute_covariance_matrices(Z)
