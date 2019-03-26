@@ -21,13 +21,13 @@ def read_data_into_array():
 	return np.array(features), np.array(labels)
 
 
-def evaluate(labels, predictions):
-	acc = 0
-	for i in range(labels.shape[0]):
-		if labels[i] == predictions[i]:
-			acc += 1
-	acc /= labels.shape[0]
-	return acc
+# def evaluate(labels, predictions):
+# 	acc = 0
+# 	for i in range(labels.shape[0]):
+# 		if labels[i] == predictions[i]:
+# 			acc += 1
+# 	acc /= labels.shape[0]
+# 	return acc
 
 
 data, labels = read_data_into_array()

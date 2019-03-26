@@ -22,7 +22,7 @@ class Model(c_means.Model):
 			for i in range(self.c - 1):
 				self.U[i][k] = random.uniform(0, remaining)
 				sum_added += self.U[i][k]
-				remaining -= sum_added
+				remaining -= self.U[i][k]
 
 			self.U[self.c - 1][k] = remaining
 		assert abs(np.sum(self.U) - self.N) < self.epsilon, 'U initialized incorrectly'
