@@ -41,4 +41,14 @@ model.fit(Z, 2, 2, 0.01)
 
 plt.scatter(Z[0, :], Z[1, :])
 plt.scatter(model.V[0, :], model.V[1, :], marker='x', c='r')
+
+x = np.arange(0, 10, 0.025)
+y = np.arange(0, 10, 0.025)
+
+U1 = np.zeros([x.shape[0], y.shape[0]])
+for i in range(x.shape[0]):
+	for j in range(y.shape[0]):
+		U1[i][j] = model.predict(np.reshape(np.array([x[i], y[j]]), [2, 1]))[0]
+
+plt.contour(x, y, U1)
 plt.show()
