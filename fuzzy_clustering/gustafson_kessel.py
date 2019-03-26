@@ -13,7 +13,6 @@ class Model(c_means.Model):
 		self.rho = np.ones(c)
 		super(Model, self).__init_vars(Z, c, fuzziness_parameter, termination_criterion, norm_inducing_matrix)
 
-	# TODO: make this initialize U with random values and not dependant on parent class at all
 	def __init_U(self, Z):
 		self.U = np.zeros([self.c, self.N])
 
