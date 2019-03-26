@@ -13,7 +13,6 @@ class Model(c_means.Model):
 		self.rho = np.ones(c)
 		super(Model, self).__init_vars(Z, c, fuzziness_parameter, termination_criterion, norm_inducing_matrix)
 
-	# TODO: make this initialize U with random values and not dependant on parent class at all
 	def __init_U(self, Z):
 		self.U = np.zeros([self.c, self.N])
 
@@ -23,7 +22,7 @@ class Model(c_means.Model):
 			for i in range(self.c - 1):
 				self.U[i][k] = random.uniform(0, remaining)
 				sum_added += self.U[i][k]
-				remaining -= sum_added
+				remaining -= self.U[i][k]
 
 			self.U[self.c - 1][k] = remaining
 		assert abs(np.sum(self.U) - self.N) < self.epsilon, 'U initialized incorrectly'

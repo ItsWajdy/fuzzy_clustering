@@ -179,7 +179,7 @@ class Model:
 				for i in range(len(edit) - 1):
 					self.U[edit[i]][k] = random.uniform(0, remaining)
 					sum_added += self.U[edit[i]][k]
-					remaining -= sum_added
+					remaining -= self.U[edit[i]][k]
 
 				self.U[edit[len(edit) - 1]][k] = remaining
 
