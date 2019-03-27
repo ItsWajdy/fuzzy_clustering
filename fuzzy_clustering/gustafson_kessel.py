@@ -37,7 +37,6 @@ class Model(c_means.Model):
 
 		A = pow(self.rho[i] * np.linalg.det(self.F[i]), 1/self.n) * np.linalg.inv(self.F[i])
 
-		# DEBUG here
 		diff = np.subtract(zk, vi)
 		ret = np.matmul(diff.transpose(), A)
 		ret = np.matmul(ret, diff)
@@ -55,7 +54,6 @@ class Model(c_means.Model):
 
 				zk = np.reshape(Z[:, k], [Z.shape[0], 1])
 				diff = np.subtract(zk, vi)
-				# DEBUG HERE
 				add = pow(self.U[i][k], self.m) * np.matmul(diff, diff.transpose())
 				f = np.add(f, add)
 
