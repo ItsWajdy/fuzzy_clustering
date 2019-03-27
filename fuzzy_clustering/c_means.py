@@ -45,7 +45,6 @@ class Model:
 					prev_U[i][k] = self.U[i][k]
 
 			self.__update_partition_matrix(D, Z)
-		# TODO: remove asserts in final version
 		assert abs(np.sum(self.U) - self.N) < self.epsilon, 'Model Didn\'t Fit Correctly'
 
 	def predict(self, Z):
@@ -57,7 +56,7 @@ class Model:
 		self.n = Z.shape[0]
 		self.m = fuzziness_parameter
 		self.epsilon = termination_criterion
-		# TODO: remove asserts in final version
+
 		assert 1 < c < self.N, 'c must satisfy 1 < c < Number of samples'
 		assert self.m > 1, 'fuzziness_parameter must be > 1'
 		assert self.epsilon > 0, 'termination_criterion must be > 0'
@@ -99,7 +98,6 @@ class Model:
 		self.V = np.zeros([self.n, self.c])
 		for cluster in range(self.c):
 			for feature in range(self.n):
-				# TODO: maybe make this truly random
 				self.V[feature][cluster] = random.uniform(np.min(Z[feature]), np.max(Z[feature]))
 
 	def __init_U(self, Z):
@@ -126,7 +124,6 @@ class Model:
 		return False
 
 	def __compute_cluster_means(self, Z):
-		# DEBUG here
 		for i in range(self.c):
 			nom = np.zeros([self.n, 1])
 			denom = 0
